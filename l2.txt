@@ -1,0 +1,35 @@
+def arithmetic_operation(operation):
+    if (operation == '+'):
+        return lambda x, y: x + y
+    elif (operation == '-'):
+        return lambda x, y: x - y
+    elif (operation == '/'):
+        return lambda x, y: x / y
+    elif (operation == '*'):
+        return lambda x, y: x * y
+
+
+func = arithmetic_operation('/')
+print(func(1, 4))
+
+
+def simple_map(transformation, values):
+    return [transformation(value) for value in values]
+values = [1, 3, 1, 5, 7]
+operation = lambda x: x + 5
+print(*simple_map(operation, values))
+
+
+RomanNumbers = {1000: 'M', 900: 'CM', 500: 'D', 400: 'CD', 100: 'C', 90: 'XC', 50: 'L', 40: 'XL', 10: 'X', 9: 'IX', 5: 'V', 4: 'IV', 1: 'I'}
+global one
+global two
+one = 5
+two = 4
+def roman(one, two):
+    global three
+    three = one + two
+    onerom = RomanNumbers.get(one)
+    tworom = RomanNumbers.get(two)
+    threerom = RomanNumbers.get(three)
+    return(print(onerom, '+', tworom, '=', threerom))
+roman(one, two)

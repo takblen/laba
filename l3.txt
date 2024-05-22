@@ -1,0 +1,186 @@
+# 9, 10
+import pytest
+
+
+def count_chars(s):
+    if not isinstance(s, str):
+        raise TypeError('Input should be a string')
+
+    char_count = {}
+    for char in s:
+        if char in char_count:
+            char_count[char] += 1
+        else:
+            char_count[char] = 1
+    return char_count
+
+
+@pytest.mark.parametrize('input_str, expected', [
+    ('', {}),
+    ('a', {'a': 1}),
+    ('aaa', {'a': 3}),
+    ('hello', {'h': 1, 'e': 1, 'l': 2, 'o': 1}),
+    ('madam', {'m': 2, 'a': 2, 'd': 1}),
+])
+def test_count_chars(input_str, expected):
+    assert count_chars(input_str) == expected
+
+
+def test_not_string_type_error():
+    with pytest.raises(TypeError):
+        count_chars(123)
+# 5, 6
+import string
+
+
+def strip_punctuation_ru(data):
+    words = data.split()
+    new_words = ''
+    prob = []
+    for word in words:
+        new_word = word.translate(str.maketrans('', '', string.punctuation))
+        new_words += new_word + ' '
+    new_words = new_words.replace('  ', ' ')
+    if new_words != '':
+        c = len(new_words)-1
+        new_words = new_words[:c]
+    return new_words
+
+
+def simple_text():
+    text = 'Привет, мир! Это - тестовая строка. Как дела?'
+    expected = 'Привет мир Это тестовая строка Как дела'
+    result = strip_punctuation_ru(text)
+    return result == expected
+
+
+def complex_text():
+    text = 'Привет, мир! Это - тестовая строка. Как дела? А вот ещё предложение.'
+    expected = 'Привет мир Это тестовая строка Как дела А вот ещё предложение'
+    result = strip_punctuation_ru(text)
+    return result == expected
+
+
+def empty_string():
+    text = ''
+    expected = ''
+    result = strip_punctuation_ru(text)
+    return result == expected
+
+
+if __name__ == '__main__':
+    print(simple_text())
+    print(complex_text())
+    print(empty_string())
+    print('Все тесты пройдены.')
+# 3, 4
+def is_correct_mobile_phone_number_ru(number):
+    number = number.replace(" ", "").replace("-", "").replace("(", "").replace(")", "")
+
+    if not number.startswith("8") and not number.startswith("+7"):
+        return False
+    if len(number) != 11 and len(number) != 12:
+        return False
+    if len(number) == 12:
+        operator_code = number[2:5]
+    else:
+        operator_code = number[1:4]
+
+    if not operator_code.isdigit() or len(operator_code) != 3:
+        return False
+    for char in number:
+        if len(number) == 12:
+            if char != '+':
+                if not char.isdigit():
+                    return False
+        else:
+            if not char.isdigit():
+                return False
+    if number.startswith("8") and len(number) == 12:
+        return False
+    return True
+
+
+def te_is_correct_mobile_phone_number_ru():
+    test_cases = [
+        ("89001234567", True),
+        ("+79001234567", True),
+        ("+7 (900) 123-45-67", True),
+        ("8 900 123 45 67", True),
+        ("8900123456", False),
+        ("79001234567", False),
+        ("+790012345678", False),
+        ("89001234567a", False),
+        ("8 900 123 45 67 8", False),
+    ]
+
+    for number, expected in test_cases:
+        result = is_correct_mobile_phone_number_ru(number)
+        if result == expected:
+            print("YES")
+        else:
+            print("NO")
+
+
+te_is_correct_mobile_phone_number_ru()
+# 8
+import pytest
+from reverse import reverse
+
+
+def test_empty_string():
+    assert reverse('') == ''def test_one_symbol():
+    assert reverse('a') == 'a'def test_palindrome():
+    assert reverse('madam') == 'madam'def test_not_palindrome():
+    assert reverse('hello') == 'olleh'def test_not_string_not_iterable():
+    with pytest.raises(TypeError):
+        reverse(123)
+
+
+def test_not_string_iterable():
+    assert reverse([1, 2, 3]) == [3, 2, 1]
+# 7
+from reverse import reverse
+import unittest
+
+
+class TestReverse(unittest.TestCase):
+    def test_empty_string(self):
+        self.assertEqual(reverse(''), '')
+
+    def test_one_symbol(self):
+        self.assertEqual(reverse('a'), 'a')
+
+    def test_palindrome(self):
+        self.assertEqual(reverse('madam'), 'madam')
+
+    def test_not_palindrome(self):
+        self.assertEqual(reverse('hello'), 'olleh')
+
+    def test_not_string_not_iterable(self):
+        with self.assertRaises(TypeError):
+            reverse(123)
+
+    def test_not_string_iterable(self):
+        self.assertEqual(reverse([1, 2, 3]), [3, 2, 1])
+# 1, 2
+def is_palindrome(data):
+    if data.lower() == data.lower()[::-1]:
+        return True    else:
+        return Falsedef test_is_palindrome():
+    test_cases = [
+    ("noon", True),    ("step on no step", False),    ("abcba", True),    ("racecar", True),    ("no", False),    ("hello world", False),    ]
+    for input_str, expected_result in test_cases:
+        result = is_palindrome(input_str)
+        if result != expected_result:
+            return "NO"    return "YES"def main():
+    data = input("Введите строку: ")
+    if is_palindrome(data):
+        print("YES")
+    else:
+        print("NO")
+
+
+if __name__ == "__main__":
+    main()
+    print(test_is_palindrome())
